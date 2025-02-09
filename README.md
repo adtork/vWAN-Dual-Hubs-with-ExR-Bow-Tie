@@ -1,4 +1,4 @@
-# vWAN-Dual-Hubs-with-ExpressRoute-Bow-Tie
+# vWAN-Dual-Hubs-with-ExpressRoute-Bow-Tie Modifying HRP
 
 # Intro
 In this article we are going to explore multiple traffic scenarios with vWAN hubs and express-route circuits. I will show various scenarios with circuits hooked to single vhub, then move to multiple vhubs and doing bow-tie. We will also toggle the Hub Routing Preference (HRP) on/off for each vhub and show how that effets the route and AS-PATH for the traffic flows! 
@@ -30,6 +30,24 @@ Default Route Table on WestUS vhub:
 Default Route Table on EastUS vhub:
 ![image](https://github.com/user-attachments/assets/924978ca-89af-4a0d-af96-8c73c7e3f168)
 So, you notice the EastUS vhub is now learning again the 10.3.0.0/16 and 10.4.0.0/16 because I removed the custom route table and put it back to default. But you will also notice something else, now those routes are learned via 12076-12076 and not 65520-65520! Why is that, because since we are doing the bow-tie now and we have the HRP set to Express-Route (Default Setting), it's learning those routes via the MSEE hairpinning and NOT via interhub ASN of 65520! You will see the same for the on-prem prefixes as well! 
+
+# Scenario 4: Same as above, but change the HRP to AS-PATH on both sides!
+Default Route Table on WestUS vhub:
+![image](https://github.com/user-attachments/assets/5047b0ca-92e1-41b1-b088-9ac7724737e6)
+You will notice now WestUS vhub is learning the remote spokes again via interhub, 65520-65520 INSTEAD of 12076-12076 because we changed the HRP to AS-PATH. This will be the same behavior as EastUS vhub learning the WestUS vhub spoke prefixes!
+![image](https://github.com/user-attachments/assets/53404525-a888-4d1d-b994-2ae72fb72a09)
+So by changing the HRP to AS-PATH is honoring the AS-PATH and not taking the MSEEs and circuit to reach the remote spokes!
+
+# Scenario 5: Lets cross-connect (bow-tie) BOTH sides and put HRP back to Express-Route!
+Default Route Table on WestUS vhub:
+![image](https://github.com/user-attachments/assets/e67535b1-c9af-4261-b67d-cee9ab52fc93)
+We can see now by putting HRP back to Express-Route, interhub is learned again via 12076-12076 and not 65520-65520. This is the same behavior for EastUS vhub learning WestUS vhub routes!
+Default Route Table on EastUS vhub:
+![image](https://github.com/user-attachments/assets/7f56e1f1-38e2-43f6-846c-fd2aae15812c)
+
+
+
+
 
 
 
