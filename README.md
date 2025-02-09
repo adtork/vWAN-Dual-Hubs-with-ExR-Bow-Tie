@@ -45,7 +45,15 @@ We can see now by putting HRP back to Express-Route, interhub is learned again v
 Default Route Table on EastUS vhub:
 ![image](https://github.com/user-attachments/assets/7f56e1f1-38e2-43f6-846c-fd2aae15812c)
 
+# Scneario 6: Final Test leaving the Bow-Tie but changing HRP to AS-PATH on both hubs! 
+Default Route Table on WestUS vhub:
+![image](https://github.com/user-attachments/assets/afa417e7-3bf3-4248-a692-4cfa9bccd701)
+By changing HRP again to AS-PATH we can see WestUS vhub is taking interhub (65520-65520) to reach the remote spokes on EastUS vhub. The behavior is the same the other way around!
+Default Route Table on EastUS vhub:
+![image](https://github.com/user-attachments/assets/d4c0b1e7-da34-4c23-8497-b0b655833a36)
 
+# Summary
+We can see in this simple article, that playing with custom route tables, lables, and vhub HRP settings impact the path the routes take! If we only have one circuit connected, the remote vhub will still learn the on-prem prefixes. If we isolate the spokes though as I did, the remote vhub will not learn the spokes. We can also see, once we cross connect (bow-tie) on side of the topology, remote spokes are no longer learned via interhub (65520-65520) but take the (12076-12076) MSEE hairpin to reach the remote spokes. As soon as we change the HRP to AS-PATH though, even with bow-tie, interhub traffic once again takes 65520-65520 and no longer hairpins down to the MSEE. So, its honoring the HRP and taking the shortest AS-PATH! I also wanted to call out, if you have circuits connected to each vhub and you don't do the bow-tie, it will always take the 65520-65520. Once you introduce the bow-tie, that is where the traffic will hairpin to the MSEE pop locations UNLESS you change the HRP on each vhub to AS-PATH.
 
 
 
