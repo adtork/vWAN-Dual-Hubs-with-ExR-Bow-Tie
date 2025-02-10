@@ -14,7 +14,7 @@ The first question then becomes, since we only have an express-route circuit con
 ![image](https://github.com/user-attachments/assets/dfb2f776-be51-4b48-90b8-f38946cf7d01)
 As we can see, even though the Express-Route circuit is only hooked up to the West vhub, the East vhub has still learned our on-prem route of 192.168.0.0/24. **Normally we would also see the remote spokes of 10.3.0.0/16 and 10.4.0.0/16 but I was messing with labels on those. In a normal scenario, we would learn all the remote vhub spokes as well :)** So, even though we only have a circuit connected to west vhub, the east vhub has still learned our on-prem routes!
 
-# Scenario 2: Hooling up the Express-Route circuit to EastUS vhub now! (So both sides have Express-Route connected!)
+# Scenario 2: Hooking up the Express-Route circuit to EastUS vhub now! (So both sides have Express-Route connected!)
 Now, the question becomes both sides should see the remote side routes still, lets check!
 Default Route Table on West vhub:
 ![image](https://github.com/user-attachments/assets/95fd2945-dfba-4722-b186-e940b3f53e58)
